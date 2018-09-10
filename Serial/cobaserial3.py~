@@ -1,0 +1,19 @@
+############################################################
+# 
+# Testing serial between nucelo f446re and nvidia jetson TK1
+#
+############################################################
+# Syarat bisa harus konek muncul as usb nucleo di jetsonnya
+
+
+
+def main():
+	x = 1.2345
+	x = x*1000/1000
+	y= 5.678
+	abcd = "9,"+str(x)+","+str(y)
+	print(abcd)
+#	print (Decimal(1.2))
+
+if __name__ == "__main__":
+	main()

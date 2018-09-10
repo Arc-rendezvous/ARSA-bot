@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Streaming Video Smart City Security</title>
+    <link rel="stylesheet" href='../static/style.css'/>
+    <style>
+	body {
+		text-align: center;
+	}
+    </style>
+  </head>
+  <body>
+    <h1>Smart City Robot</h1>
+<h3> TIME: {{ time }} ==> <a href="/camera"class="button">REFRESH</a></h3>
+    <h3><img src="{{ url_for('video_feed') }}" width="50%"></h3>
+<h3> Main ==> <a href="/" class="button">MAIN PAGE</a></h3>
+    <p> ITB Smart City Robot</p>
+  </body>
+</html>
+

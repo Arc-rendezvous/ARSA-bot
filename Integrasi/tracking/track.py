@@ -1,0 +1,61 @@
+import numpy as np
+import time
+
+### Variables
+camera_matrix = np.zeros(shape=(3,4))
+cam_coord = np.zeros(shape=(3,1))
+world_coord = np.zeros(shape=(2,1))
+rotation_matrix = np.zeros(shape=(2,2))
+flag_track = 0 # default no person detection
+
+def findObjectTarget(x_pixel,y_pixel,distance):
+	"""
+		Find xy_world object using camera focal length, return in meter
+		@param location pixel x at camera image
+		@param location pixel y at camera image
+		@param distance read from kinect according to (x,y) in camera image
+		@return teta_person 
+	"""
+	## Implementasi 1 - yang didapet distance = z ##
+	teta = atan((x_pixel - frame_resized.shape[1])/distance)
+
+	## Implementasi 2 - distance = x^2 + z^2 ##
+	teta = asin((x_pixel - frame_resized.shape[1])/distance)
+
+	return x_person, y_person, teta_person
+
+def main():
+	# Initialze the serial to nucleo
+	nucleo = serial.Serial()
+	nucleo.close()
+	nucleo.baudrate = 57600
+	nucleo.port = '/dev/ttyACM0'
+	nucleo.timeout = 1
+	nucleo.open()
+	nucleo.flushInput()
+	print("connected to: " + nucleo.portstr)
+	time.sleep(3) # give time to wake up
+
+	while(1):
+		# Cek terdeteksi orang atau tidak 
+		flag_track = getXYpixel() #dummy implementation
+
+		if (flag_track == 1):		
+			# entering tracking state...
+			nucleo.write("9,,,,,,,,,,,,".encode())
+			x_robot,y_robot = nucleo.readline().decode().rstrip().split(,)
+			#print(x_robot,y_robot)
+			findObjectTarget(x_pixel,y_pixel,teta)
+			nucleo.write(("7,"+str(x_person)+","+str(y_person)).encode()) # send x_person and y_person
+			#hello = nucleo.readline()
+			#print(hello)
+							
+		else if (flag_track == 0):
+			# leaving tracking state...
+			nucleo.write(("8,"+str(x_person)+","+str(y_person)).encode()) # send x_person and y_person
+			#hello = nucleo.readline()
+			#print(hello)
+			#!!!!!!!!!!!!!!!!NEED TO IMPLEMENT BUFFER TIME!!!!!!!!!!!!!!!!!!!!!!!!!#
+	
+if __name__ == "__main__":
+	main()
